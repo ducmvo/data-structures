@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-  string name, city;
+  string name, city, name2;
   int age;
 
   cout << "Enter your name: ";
@@ -16,6 +16,10 @@ int main() {
   cout << "Name: " << name << endl;
   cout << "Age: " << age << endl;
   cout << "City: " << city << endl;
+
+  // getline(cin, name); // include space
+  cin >> name >> name2; // separated by space
+  cout << name + " -- " + name2 << endl;
   
   return 0;
 }
