@@ -56,7 +56,7 @@ bool Date::validateDate(int year, int month, int day){
     if (
         (year < DEFAULT_YEAR) ||
        ( month < MIN_MONTH) || (month > MONTHS) ||
-        (day < MIN_DAY) || (day > DAYS[month])
+        (day < MIN_DAY) || (day > DAYS[month - 1])
     ) return false;
     return true;
 }
