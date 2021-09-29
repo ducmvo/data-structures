@@ -40,28 +40,23 @@ string Date::getSeason() const {
 //    First day of Spring: March 21
     if (month == DEC && day >= FIRST_DAY_OF_WINTER)
         return WINTER;
-    else if (month > SEP 
-        || month == SEP && day >= FIRST_DAY_OF_FALL)
+    else if ((month > SEP)
+        || (month == SEP && day >= FIRST_DAY_OF_FALL))
         return FALL;
-    else if (month > JUN 
-        || month == JUN && day >= FIRST_DAY_OF_SUMMER)
+    else if ((month > JUN)
+        || (month == JUN && day >= FIRST_DAY_OF_SUMMER))
         return SUMMER;
-    else if (month > MAR 
-        || month == MAR && day >= FIRST_DAY_OF_SPRING)
+    else if ((month > MAR)
+        || (month == MAR && day >= FIRST_DAY_OF_SPRING))
         return SPRING;
     else return WINTER;
-};
+}
 
 bool Date::validateDate(int year, int month, int day){
     if (
-        year < DEFAULT_YEAR || 
-        month < MIN_MONTH || month > MONTHS || 
-        day < MIN_DAY || day > DAYS[month]    
+        (year < DEFAULT_YEAR) ||
+       ( month < MIN_MONTH) || (month > MONTHS) ||
+        (day < MIN_DAY) || (day > DAYS[month])
     ) return false;
     return true;
-};
-
-
-
-
-
+}

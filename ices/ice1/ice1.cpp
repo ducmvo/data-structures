@@ -20,7 +20,7 @@ int main() {
         {9, 23, 2011}
     };
     Date date;
-    for (int i = 0; i < sizeof(dates) / sizeof(dates[0]); i++)
+    for (int i = 0; i < 8; i++)
     {
         date.setDate(dates[i].year, dates[i].month, dates[i].day);
         cout << date.getDate() << " - " << date.getSeason() << endl;
