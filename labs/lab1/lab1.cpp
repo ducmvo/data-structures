@@ -13,7 +13,7 @@ int main() {
     const string RATING_FILE = "ratings.txt";
     const int CAPACITY = 100; // Initial array capacity
     int memberSize = 0; // total number of members read from file
-    int bookSize = 0; // total number of books read from file
+    const int BOOK_SIZE = 55; // total number of books read from file
     // dynamically allocate memory
     string* members = new string[CAPACITY];
     int** ratings = new int*[CAPACITY];
@@ -21,23 +21,13 @@ int main() {
     string line; // single line read from file
     ifstream inputFile;
 
-    // find total number of books reading from file
-    inputFile.open(BOOK_FILE);
-    if(inputFile.is_open())
-        while (getline(inputFile, line)) bookSize++;
-    else {
-        cout << "Failed to open file " << BOOK_FILE << endl;
-        return -1;
-    }
-    inputFile.close();
-
     // open and save member names and ratings to arrays
     inputFile.open(RATING_FILE);
     if(inputFile.is_open()) {
         for (int i = 1; getline(inputFile, line); i++) { // line start at 1
             if (i % 2 == 0) { // if line number is even, save current member's ratings
-                ratings[i / 2 - 1] = new int[bookSize];
-                for (int j = 0; j < bookSize; j++) {
+                ratings[i / 2 - 1] = new int[BOOK_SIZE];
+                for (int j = 0; j < BOOK_SIZE; j++) {
                     rating = stoi(line.substr(0, line.find(" ")));
                     ratings[i / 2 - 1][j] = rating;
                     line = line.substr(line.find(" ") + 1, line.length());
@@ -54,7 +44,7 @@ int main() {
     // print member names and ratings
     for (int i = 0; i < memberSize; i++) {
         cout << members[i] << endl;
-        for (int j = 0; j < bookSize; j++) {
+        for (int j = 0; j < BOOK_SIZE; j++) {
             cout << ratings[i][j] << " ";
         }
         cout << endl;
