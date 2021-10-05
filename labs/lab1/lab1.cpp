@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 using namespace std;
 /**
  * This main method opens and read file contain
@@ -18,23 +19,25 @@ int main() {
     string* members = new string[CAPACITY];
     int** ratings = new int*[CAPACITY];
     int rating; // member rating for single book
-    string line; // single line read from file
+    string line; // member name line
+    string line2; // ratings line
     ifstream inputFile;
+    stringstream ss;
 
     // open and save member names and ratings to arrays
     inputFile.open(RATING_FILE);
     if(inputFile.is_open()) {
-        for (int i = 1; getline(inputFile, line); i++) { // line start at 1
-            if (i % 2 == 0) { // if line number is even, save current member's ratings
-                ratings[i / 2 - 1] = new int[BOOK_SIZE];
-                for (int j = 0; j < BOOK_SIZE; j++) {
-                    rating = stoi(line.substr(0, line.find(" ")));
-                    ratings[i / 2 - 1][j] = rating;
-                    line = line.substr(line.find(" ") + 1, line.length());
-                }
-            } else // if line number is odd, save current member's name
-                members[memberSize++] = line.substr(0, line.find(","));
-        }
+        while(getline(inputFile, line)) {
+            members[memberSize] = line;
+            getline(inputFile, line2);
+            ss.str(line2);
+            ratings[memberSize] = new int[BOOK_SIZE];
+            for (int j = 0; j < BOOK_SIZE; j++) {
+                ss >> rating;
+                ratings[memberSize][j] = rating;
+            } 
+            memberSize++; 
+        }    
     } else {
         cout << "Failed to open file " << RATING_FILE << endl;
         return -1;
