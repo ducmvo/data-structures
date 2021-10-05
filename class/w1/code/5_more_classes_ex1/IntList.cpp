@@ -33,6 +33,8 @@ IntList::IntList(const IntList &obj) {
 }
 
 //We will go over next week!
+// x = y is the same as x.operator = y 
+// basically overide the = operator
 IntList& IntList::operator=(const IntList &obj) {
     // check if you're assigning an object to itself
     if (this != &obj) {
