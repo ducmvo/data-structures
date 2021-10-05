@@ -11,7 +11,7 @@ BookList::BookList(int cap) {
     bookList = new Book[cap];
     capacity = cap;
     numBooks = 0;
-};
+}
 
 BookList::BookList() {
     bookList = new Book[DEFAULT_CAPACITY];
@@ -27,7 +27,7 @@ void BookList::add(Book book) {
     if (numBooks >= capacity) resize();
     book.isbn = rand();
     bookList[numBooks++] = book;
-};
+}
 
 int BookList::size() const {
     return numBooks;
