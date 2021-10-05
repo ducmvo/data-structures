@@ -1,0 +1,26 @@
+#include <iostream>
+#include "BookList.h"
+using namespace std;
+
+int main() {
+    BookList books;
+    string fileName;
+
+    // Input book file path
+    cout << "Enter books file: ";
+    getline(cin, fileName);
+    // Load books from file
+    if(books.load(fileName)) {
+        cout << "Failed to load file" << endl;
+        return -1;
+    };
+
+    // Print loaded books
+    cout << "# of books: " + to_string(books.size()) << endl;
+    cout << books.to_string() << endl;
+
+    // Add a new book
+    Book newBook = {"Invest in crypto", "Duc Vo", "2021"};
+    books.add(newBook);
+    return 0;
+}
