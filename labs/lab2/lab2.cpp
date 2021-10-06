@@ -20,7 +20,6 @@ int main() {
     cout << books.to_string() << endl;
 
     // Add a new book
-    Book newBook = {"Invest in crypto", "Duc Vo", "2021"};
-    books.add(newBook);
+    books.add("Invest in crypto", "Duc Vo", "2021");
     return 0;
 }

@@ -23,9 +23,9 @@ BookList::~BookList() {
     delete [] bookList;
 }
 
-void BookList::add(Book book) {
+void BookList::add(string author, string title, string year) {
     if (numBooks >= capacity) resize();
-    book.isbn = rand();
+    Book book = {author, title, year, rand()};
     bookList[numBooks++] = book;
 }
 
@@ -67,7 +67,7 @@ int BookList::load(string file) {
                 if (i==1) book.title = line;
                 if (i==2) book.year = line;
             }
-            add(book);
+            add(book.author, book.title, book.year);
         }
         inputFile.close();
         return 0;
