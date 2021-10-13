@@ -20,14 +20,26 @@ MemberList::~MemberList() {
     delete [] memberList;
 }
 
-void MemberList::add(string name) {
+int MemberList::add(string name) {
     if (numMembers >= capacity) resize();
     Member member = {rand(), name};
     memberList[numMembers++] = member;
+    return member.account;
 }
 
-int* MemberList::get(int index) {
-    return &memberList[index].account;
+int MemberList::get(int account) {
+    for (int i = 0; i < size(); i++) {
+        if (memberList[i].account == account)
+            return i;
+    }
+    return -1;
+}
+
+int MemberList::getAccount(int index) {
+    if (0 <= index && index < size()) {
+        return memberList[index].account;
+    }
+    return -1;
 }
 
 int MemberList::size() const {

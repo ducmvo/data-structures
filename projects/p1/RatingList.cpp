@@ -23,9 +23,9 @@ RatingList::~RatingList() {
     delete [] ratingList;
 }
 
-void RatingList::add(int* book, int* memberAccount, int memberRating) {
+void RatingList::add(int isbn, int account, int memberRating) {
     if (numRatings >= capacity) resize();
-    Rating rating = {book, memberAccount, memberRating};
+    Rating rating = {isbn, account, memberRating};
     ratingList[numRatings++] = rating;
 }
 
@@ -37,8 +37,8 @@ string RatingList::to_string() const {
     string ratingResult = "";
     for (int i = 0; i < size(); i++) {
         ratingResult += (::to_string(i + 1) + ". " +
-                ::to_string(*ratingList[i].book) + ", " +
-                ::to_string(*ratingList[i].account) + ", " +
+                ::to_string(ratingList[i].isbn) + ", " +
+                ::to_string(ratingList[i].account) + ", " +
                 ::to_string(ratingList[i].rating) + "\n");
     }
     return ratingResult;
@@ -60,20 +60,20 @@ int RatingList::load(string file, MemberList &members, BookList &books) {
     stringstream ss;
     int rating; // member rating for single book
     int memberSize = 0; // total number of members read from file
-    int* account;
-    int *book;
+    int isbn;
+    int account;
     inputFile.open(file);
     if(inputFile.is_open()) {
         while(getline(inputFile, line)) {
             members.add(line);
             getline(inputFile, line2);
             ss.str(line2);
-            account = members.get(memberSize);
-            for (int j = 0; j < books.size(); j++) {
+            for (int bookIndex = 0; bookIndex < books.size(); bookIndex++) {
                 ss >> rating;
                 if (rating != 0) {
-                    book = books.get(j);
-                    add(book, account, rating);
+                    isbn = books.getIsbn(bookIndex);
+                    account = members.getAccount(memberSize);
+                    add(isbn, account, rating);
                 }
             } 
             memberSize++; 

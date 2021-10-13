@@ -14,15 +14,15 @@ public:
     RatingList();               // Empty constructor
     ~RatingList();              // Destructor
 
-    void add(int*, int*, int);                // add a rating to array
+    void add(int, int, int);                // add a rating to array
     int size() const;                       // number of ratings in array
     string to_string() const;                // return string representation
                                             // of RatingList class
     int load(string, MemberList &, BookList &); // load ratings from database
 private:
     struct Rating {
-        int* book;
-        int* account;
+        int isbn;
+        int account;
         int rating;
     };
     static const int DEFAULT_CAPACITY = 100;
@@ -30,7 +30,6 @@ private:
     int capacity;               // array capacity
     int numRatings;               // number of ratings
     void resize();              // resize array when full
-
 };
 
 

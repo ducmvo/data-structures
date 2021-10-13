@@ -14,7 +14,8 @@ public:
     ~BookList();                // Destructor
 
     void add(string, string, string);             // add a book to array
-    int* get(int index);
+    int get(int isbn);
+    int getIsbn (int index);    // get book isbn from index
     int size() const;           // number of books in array
     string to_string() const;   // return string representation
                                 // of BooList class

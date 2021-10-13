@@ -29,8 +29,19 @@ void BookList::add(string author, string title, string year) {
     bookList[numBooks++] = book;
 }
 
-int* BookList::get(int index) {
-    return &bookList[index].isbn;
+int BookList::get(int isbn) {
+    for (int i = 0; i < size(); i++) {
+        if (bookList[i].isbn == isbn)
+            return i;
+    }
+    return -1;
+}
+
+int BookList::getIsbn(int index) {
+    if (0 <= index && index < size()) {
+        return bookList[index].isbn;
+    }
+    return -1;
 }
 
 int BookList::size() const {
