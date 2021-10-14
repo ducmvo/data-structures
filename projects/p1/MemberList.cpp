@@ -1,6 +1,7 @@
-//
-// Created by Duc Vo on 10/12/21.
-//
+/**
+ * Created on 10/12/21.
+ * @author Duc Vo
+ */
 
 #include "MemberList.h"
 
@@ -40,6 +41,13 @@ int MemberList::getAccount(int index) {
         return memberList[index].account;
     }
     return -1;
+}
+
+string MemberList::getName(int index) {
+    if (0 <= index && index < size()) {
+        return memberList[index].name;
+    }
+    return "";
 }
 
 int MemberList::size() const {

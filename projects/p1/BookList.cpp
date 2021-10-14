@@ -1,6 +1,7 @@
-//
-// Created by Duc Vo on 10/12/21.
-//
+/**
+ * Created on 10/12/21.
+ * @author Duc Vo
+ */
 
 #include "BookList.h"
 #include <iostream>
@@ -23,10 +24,11 @@ BookList::~BookList() {
     delete [] bookList;
 }
 
-void BookList::add(string author, string title, string year) {
+int BookList::add(string author, string title, string year) {
     if (numBooks >= capacity) resize();
     Book book = {rand(), author, title, year};
     bookList[numBooks++] = book;
+    return book.isbn;
 }
 
 int BookList::get(int isbn) {
@@ -38,10 +40,27 @@ int BookList::get(int isbn) {
 }
 
 int BookList::getIsbn(int index) {
-    if (0 <= index && index < size()) {
+    if (0 <= index && index < size())
         return bookList[index].isbn;
-    }
     return -1;
+}
+
+string BookList::getAuthor(int index) {
+ if (0 <= index && index < size())
+     return bookList[index].author;
+ return "";
+}
+
+string BookList::getTitle(int index) {
+ if (0 <= index && index < size())
+     return bookList[index].title;
+ return "";
+}
+
+string BookList::getYear(int index) {
+ if (0 <= index && index < size())
+     return bookList[index].year;
+ return "";
 }
 
 int BookList::size() const {

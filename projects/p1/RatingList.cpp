@@ -1,6 +1,7 @@
-//
-// Created by Duc Vo on 10/12/21.
-//
+/**
+ * Created on 10/12/21.
+ * @author Duc Vo
+ */
 
 #include "RatingList.h"
 #include <iostream>
@@ -23,10 +24,42 @@ RatingList::~RatingList() {
     delete [] ratingList;
 }
 
-void RatingList::add(int isbn, int account, int memberRating) {
+int RatingList::add(int isbn, int account, int memberRating) {
     if (numRatings >= capacity) resize();
     Rating rating = {isbn, account, memberRating};
     ratingList[numRatings++] = rating;
+    return numRatings - 1;
+}
+
+int RatingList::update(int index, int rating) {
+    ratingList[index].rating = rating;
+    return numRatings - 1;
+}
+
+int RatingList::get(int isbn, int account) {
+    for (int i = 0; i < size(); i++) {
+        if (ratingList[i].isbn == isbn && ratingList[i].account == account )
+            return i;
+    }
+    return -1;
+}
+
+int RatingList::getAccount(int index) {
+    if (0 <= index && index < numRatings)
+        return ratingList[index].account;
+    return -1;
+}
+
+int RatingList::getRating(int index) {
+    if (0 <= index && index < numRatings)
+        return ratingList[index].rating;
+    return -1;
+}
+
+int RatingList::getIsbn(int index) {
+    if (0 <= index && index < numRatings)
+        return ratingList[index].isbn;
+    return -1;
 }
 
 int RatingList::size() const {
@@ -70,11 +103,11 @@ int RatingList::load(string file, MemberList &members, BookList &books) {
             ss.str(line2);
             for (int bookIndex = 0; bookIndex < books.size(); bookIndex++) {
                 ss >> rating;
-                if (rating != 0) {
+//                if (rating != 0) {
                     isbn = books.getIsbn(bookIndex);
                     account = members.getAccount(memberSize);
                     add(isbn, account, rating);
-                }
+//                }
             } 
             memberSize++; 
         }
