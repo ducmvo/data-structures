@@ -464,7 +464,7 @@ int main() {
                       books, ratings, memberRatingList);
 
         // Clear memberRatingList when log out or quit program
-        if (!isLoggedIn || isQuit) {
+        if ((!isLoggedIn || isQuit) && memberRatingList != nullptr) {
             for (int i = 0; i < members.size(); i++) {
                 delete [] memberRatingList[i];
             }
