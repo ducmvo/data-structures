@@ -463,8 +463,8 @@ int main() {
                       isLoggedIn, isQuit,members,
                       books, ratings, memberRatingList);
 
-        // Clear memberRatingList when log out
-        if (!isLoggedIn) {
+        // Clear memberRatingList when log out or quit program
+        if (!isLoggedIn || isQuit) {
             for (int i = 0; i < members.size(); i++) {
                 delete [] memberRatingList[i];
             }
