@@ -93,8 +93,8 @@ int RatingList::load(string file, MemberList &members, BookList &books) {
     stringstream ss;
     int rating; // member rating for single book
     int memberSize = 0; // total number of members read from file
-    int isbn;
-    int account;
+    int isbn; // book ISBN
+    int account; // user account number
     inputFile.open(file);
     if(inputFile.is_open()) {
         while(getline(inputFile, line)) {
@@ -103,16 +103,13 @@ int RatingList::load(string file, MemberList &members, BookList &books) {
             ss.str(line2);
             for (int bookIndex = 0; bookIndex < books.size(); bookIndex++) {
                 ss >> rating;
-//                if (rating != 0) {
-                    isbn = books.getIsbn(bookIndex);
-                    account = members.getAccount(memberSize);
-                    add(isbn, account, rating);
-//                }
+                isbn = books.getIsbn(bookIndex);
+                account = members.getAccount(memberSize);
+                add(isbn, account, rating);
             } 
             memberSize++; 
         }
     } else {
-        // cout << "Failed to open file " << file << endl;
         return -1;
     }
     inputFile.close();
