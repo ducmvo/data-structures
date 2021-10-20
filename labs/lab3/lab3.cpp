@@ -16,7 +16,7 @@ string processString(string str) {
 }
 
 /**
-* This function can check is panlindrome 
+* This function can check is palindrome
 * directly if pre-process string status provided
 */
 bool isPalindrome(string str, bool isProcessed) {
@@ -24,12 +24,7 @@ bool isPalindrome(string str, bool isProcessed) {
         str = processString(str);
         isProcessed = true;
     }
-
-    int strLen = 0;
-    for (char c: str) {
-        strLen++;
-    }
-
+    int strLen = str.length();
     int lastIdx = strLen - 1; 
     char firstChar = str[0]; 
     char lastChar = str[lastIdx];
