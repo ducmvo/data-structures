@@ -24,7 +24,12 @@ bool isPalindrome(string str, bool isProcessed) {
         str = processString(str);
         isProcessed = true;
     }
-    int strLen = str.length(); 
+
+    int strLen = 0;
+    for (char c: str) {
+        strLen++;
+    }
+
     int lastIdx = strLen - 1; 
     char firstChar = str[0]; 
     char lastChar = str[lastIdx];
