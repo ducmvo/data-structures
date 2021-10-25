@@ -15,7 +15,7 @@ int main() {
     string fileName, str;
     int input;
     string sInput;
-    int testArr[] = {20,40,10,70,99,-2,59,43};
+    int testArr[] = {20, 40, 10, 70, 99, -2, 59, 43};
     string testStringArr[] = {"gene", "mary", "bea", "uma", "yan", "amy", "ron", "opal"};
 
 
@@ -98,7 +98,7 @@ int main() {
     displayOrderTraversal(intBST);
 
     inputFile.close();
-    cout << "==================================================" << endl;
+    cout << "\n==================================================" << endl;
 
     cout << endl << "********************\n"
                     "* test string BST  *\n"
@@ -129,6 +129,7 @@ int main() {
         cout << sInput << " ";
         stringBST.insert(sInput);
     }
+    cout << endl;
     displayTreeStats(stringBST);
     cout << endl;
 
@@ -174,7 +175,7 @@ int main() {
     displayTreeStats(stringBST);
     displayOrderTraversal(stringBST);
 
-    cout << "TEST COPY TREE" << endl;
+    cout << endl << "TEST CONTRUCTOR COPY METHODS" << endl;
     BST<string> st(stringBST);
     cout<< "COPIED STRING TREE STATS: " << endl;
     displayTreeStats(st) ;
@@ -192,31 +193,32 @@ int main() {
     cout<< "= OPERATOR STRING TREE STATS: " << endl;
     displayTreeStats(bst2) ;
 
+    cout << endl << "GoodBye!" << endl;
+
     inputFile.close();
     return 0;
 }
 
 template <typename T>
 void displayTreeStats(BST<T> &obj) {
-    cout <<"# of nodes:  " << obj.size() << endl <<
-         "# of leaves: " << obj.getLeafCount() << endl <<
-         "BST height:  " << obj.getHeight() << endl <<
-         "BST empty? " << (obj.empty() ? "true" : "false") << endl;
+    cout <<
+        "# of nodes:  " << obj.size() << endl <<
+        "# of leaves: " << obj.getLeafCount() << endl <<
+        "BST height:  " << obj.getHeight() << endl <<
+        "BST empty? " << (obj.empty() ? "true" : "false") << endl;
 }
 
 template <typename T>
 void displayOrderTraversal(BST<T> &obj) {
     cout <<
-         "pre-order:  " << obj.getPreOrderTraversal() << endl <<
-         "in-order:   " << obj.getInOrderTraversal() << endl <<
-         "post-order: " << obj.getPostOrderTraversal() << endl;
+    "pre-order:  " << obj.getPreOrderTraversal() << endl <<
+    "in-order:   " << obj.getInOrderTraversal() << endl <<
+    "post-order: " << obj.getPostOrderTraversal() << endl;
 }
-
 
 template <typename T>
 void displayLevelAndAncestors(BST<T> &obj, T val) {
     cout <<
-         "level(" << val << "): " << obj.getLevel(val) << ", "
-         "ancestors(" << val << "): " << obj.getAncestors(val) << endl;
-
+    "level(" << val << "): " << obj.getLevel(val) << ", "
+    "ancestors(" << val << "): " << obj.getAncestors(val) << endl;
 }
