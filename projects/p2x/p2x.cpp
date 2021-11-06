@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include "BST.h"
+#include "BSTx.h"
 using namespace std;
 
 template <typename T>

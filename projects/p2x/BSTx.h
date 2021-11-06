@@ -1,9 +1,9 @@
 //
-// Created by Duc Vo on 10/23/21.
+// Created by Duc Vo on 11/06/21.
 //
 
-#ifndef P2X_BST_H
-#define P2X_BST_H
+#ifndef P2X_BSTX_H
+#define P2X_BSTX_H
 #include <sstream>
 #include <queue>
 using namespace std;
@@ -339,4 +339,4 @@ void BST<T>::getOrderTraversal(Node* &node, stringstream &ss, string type) {
     }
 }
 
-#endif //P2X_BST_H
+#endif //P2X_BSTX_H
