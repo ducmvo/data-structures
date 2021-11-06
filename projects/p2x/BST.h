@@ -24,7 +24,8 @@ public:
     int getHeight();                          // height of BST. 0 if BST empty
     int getWidth();                           // width of BST. 0 if BST empty
     int getLevel(T val);                      // level of a node in BST
-    string getLevelOrder()
+    string getLevelOrder();                   // string that results from traver
+                                                 //-sing the BST level by level.
     string getAncestors(T val);               // string of ancestors
     string getInOrderTraversal();             // string of in-order elements
     string getPreOrderTraversal();            // string of pre-order elements
@@ -44,8 +45,12 @@ private:
     bool remove(T val, Node* &);               // remove a Node
     int size(Node* &, int &);                  // get total node of the tree
     int getLeafCount(Node* &, int &);          // get total node of the tree
-    int getHeight(Node* &);                    // get height the tree
-    int getLevel(T val, Node* &);
+    int getHeight(Node* &);                    // get height of the tree
+    int getWidth(Node* &);                     // get max width of the tree
+    int getLevel(T val, Node* &);              // get level of a node in BST
+    string getLevelOrder(queue<Node*> &, stringstream &ss); // string from nodes
+                                                            // by traversing the
+                                                            // BST level by level.
     void getAncestors(T val, stringstream &ss, Node* &node);
     void getOrderTraversal(Node* &, stringstream &, string); //ordered traversal
 };
@@ -121,13 +126,21 @@ int BST<T>::getHeight() {
 
 template <typename T>
 int BST<T>::getWidth() {
-    queue<Node> q;
-    
+    if (root == nullptr) return 0;
+    return max(1, getWidth(root));
 }
 
 template <typename T>
 int BST<T>::getLevel(T val) {
     return getLevel(val, root);
+}
+
+template <typename T>
+string BST<T>::getLevelOrder() {
+    stringstream ss;
+    queue<Node*> q;
+    q.push(root);
+    return getLevelOrder(q, ss);
 }
 
 template <typename T>
@@ -279,10 +292,32 @@ int BST<T>::getHeight(Node* &node) {
 }
 
 template <typename T>
+int BST<T>::getWidth(Node* &node) {
+    int width = 0; // number of children in a single node
+    if (node == nullptr) return width;
+    if (node->left != nullptr) width++;
+    if (node->right != nullptr) width++;
+    return max(width, getWidth(node->left) + getWidth(node->right));
+}
+
+template <typename T>
 int BST<T>::getLevel(T val, Node* &node) {
     if (node->data == val) return 0;
     else return 1 + getLevel(val, val > node->data ? node->right : node->left);
 
+}
+
+template <typename T>
+string BST<T>::getLevelOrder(queue<Node*> &q, stringstream &ss) {
+    if(q.size() == 0) return ss.str();
+    Node* node = q.front(); // get the front node from queue
+    q.pop(); // dequeue the front node
+    if (node != nullptr) {
+        ss << node->data << " "; // append node data to string stream
+        if (node->left != nullptr) q.push(node->left); // enqueue left child
+        if (node->right != nullptr) q.push(node->right); // enqueue right child
+    }
+    return getLevelOrder(q, ss);
 }
 
 template <typename T>

@@ -175,7 +175,7 @@ int main() {
     displayTreeStats(stringBST);
     displayOrderTraversal(stringBST);
 
-    cout << endl << "TEST CONTRUCTOR COPY METHODS" << endl;
+    cout << endl << "TEST CONSTRUCTOR COPY METHODS" << endl;
     BST<string> st(stringBST);
     cout<< "COPIED STRING TREE STATS: " << endl;
     displayTreeStats(st) ;
@@ -205,15 +205,17 @@ void displayTreeStats(BST<T> &obj) {
         "# of nodes:  " << obj.size() << endl <<
         "# of leaves: " << obj.getLeafCount() << endl <<
         "BST height:  " << obj.getHeight() << endl <<
-        "BST empty? " << (obj.empty() ? "true" : "false") << endl;
+        "BST width:   " << obj.getWidth() << endl <<
+        "BST empty?   " << (obj.empty() ? "true" : "false") << endl;
 }
 
 template <typename T>
 void displayOrderTraversal(BST<T> &obj) {
     cout <<
-    "pre-order:  " << obj.getPreOrderTraversal() << endl <<
-    "in-order:   " << obj.getInOrderTraversal() << endl <<
-    "post-order: " << obj.getPostOrderTraversal() << endl;
+    "pre-order:   " << obj.getPreOrderTraversal() << endl <<
+    "in-order:    " << obj.getInOrderTraversal() << endl <<
+    "post-order:  " << obj.getPostOrderTraversal() << endl <<
+    "level-order: " << obj.getLevelOrder() << endl;
 }
 
 template <typename T>
