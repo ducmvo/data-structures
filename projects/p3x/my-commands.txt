@@ -1,0 +1,7 @@
+add urgent Duc
+add immediate Kha
+add minimal YE
+add emergency May
+add minimal Ta
+add immediate Ken
+load commands.txt;
