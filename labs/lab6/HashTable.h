@@ -58,7 +58,6 @@ int HashTable::put(int key, int value) {
     && table[index]->key != key) {
         index++;
         index = hash(index);
-        if (index == capacity) return -1;
     }
 
     if (table[index] == nullptr) {
@@ -83,7 +82,6 @@ int HashTable::get(int key) {
     while (table[index] != nullptr && table[index]->key != key) {
         index++;
         index = hash(index);
-        if (index == capacity) return -1;
     }
     return table[index]->value;
 }
@@ -94,7 +92,6 @@ bool HashTable::contains(int key) {
     while (table[index]->key != key) {
         index++;
         index = hash(index);
-        if (index == capacity) return false;
     }
     return true;
 }
