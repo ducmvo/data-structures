@@ -1,0 +1,13 @@
+help
+add minimal Sirjames
+add emergency Moxie Crimefighter
+add immediate Brenton Jamison
+list
+peek
+next
+list
+next
+next
+next
+load commands.txt
+list

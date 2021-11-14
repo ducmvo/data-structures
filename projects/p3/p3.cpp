@@ -2,8 +2,6 @@
 // TODO: add functional documentation (and inline comments, as necessary)
 
 #include "PatientPriorityQueue.h"
-#include "Patient.h"
-
 #include <fstream>
 #include <iostream>
 #include <sstream>
@@ -42,6 +40,7 @@ void execCommandsFromFileCmd(string, PatientPriorityQueue &);
 string delimitBySpace(string &);
 // Delimits (by space) the string from user or file input.
 
+string trim(const string&);
 
 int main() {
 	// declare variables
@@ -91,7 +90,8 @@ bool processLine(string line, PatientPriorityQueue &priQueue) {
 }
 
 void addPatientCmd(string line, PatientPriorityQueue &priQueue) { 
-	string priority, name; 
+	string priority, name;
+    int priorityCode;
 
 	// get priority and name
 	priority = delimitBySpace(line);
@@ -105,24 +105,44 @@ void addPatientCmd(string line, PatientPriorityQueue &priQueue) {
 		return;
 	}
 
-	// TODO: add logic to remove leading/trailing spaces
-	// TODO: validate priority is between 1 and 4
-	// TODO: add patient
+	 name = trim(name);
+
+    if (priority == "immediate"){
+        priorityCode = 1;
+    } else if (priority == "emergency"){
+        priorityCode = 2;
+    } else if (priority == "urgent"){
+        priorityCode = 3;
+    } else if (priority == "minimal"){
+        priorityCode = 4;
+    } else {
+        cout << "Error: priority is either immediate, "
+                << "emergency, urgent or minimal.\n";
+        return;
+    }
+    priQueue.add(name, priorityCode);
+    cout << "Added patient \"" << name << "\" to the priority system"<< endl;
 }
 
 void peekNextCmd(PatientPriorityQueue &priQueue) {
-	// TODO: shows next patient to be seen
+    if (priQueue.size() == 0)
+        cout << "There are no patients in the waiting area." << endl;
+    else
+        cout << "Highest priority patient to be called next: " << priQueue.peek();
 }
 
 void removePatientCmd(PatientPriorityQueue &priQueue) {
-	// TODO: removes and shows next patient to be seen
+    if (priQueue.size() == 0)
+        cout << "There are no patients in the waiting area." << endl;
+    else
+        cout << "This patient will now be seen: " << priQueue.remove() << endl;
 }
 
 void showPatientListCmd(PatientPriorityQueue &priQueue) {
 	cout << "# patients waiting: " << priQueue.size() << endl;
 	cout << "  Arrival #   Priority Code   Patient Name\n"
 		  << "+-----------+---------------+--------------+\n";
-	// TODO: shows patient detail in heap order
+    cout << priQueue.to_string();
 }
 
 void execCommandsFromFileCmd(string filename, PatientPriorityQueue &priQueue) {
@@ -133,7 +153,7 @@ void execCommandsFromFileCmd(string filename, PatientPriorityQueue &priQueue) {
 	infile.open(filename);
 	if (infile) {
 		while (getline(infile, line)) {
-			cout << "\ntriage> " << line;
+			cout << "\ntriage> " << line << endl;
 			// process file input 
 			processLine(line, priQueue);
 		} 
@@ -158,11 +178,13 @@ string delimitBySpace(string &s) {
 }
 
 void welcome() {
-	// TODO
+    cout << "            WELCOME TO TRIAGE EMERGENCY ROOM              " << endl
+         << "==========================================================="<< endl;
 }
 
 void goodbye() {
-	// TODO
+	cout << "GOODBYE, THANK YOU FOR USING TRIAGE EMERGENCY ROOM PROGRAM" << endl
+         << "==========================================================" << endl;
 }	
 
 void help() {
@@ -179,4 +201,12 @@ void help() {
 << "load <file> Reads the file and executes the command on each line\n"
 << "help        Displays this menu\n"
 << "quit        Exits the program\n";
+}
+
+
+string trim(const string& line){
+    const char* WhiteSpace = " \t\v\r\n";
+    std::size_t start = line.find_first_not_of(WhiteSpace);
+    std::size_t end = line.find_last_not_of(WhiteSpace);
+    return start == end ? std::string() : line.substr(start, end - start + 1);
 }

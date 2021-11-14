@@ -1,8 +1,4 @@
-// p3.cpp
-// TODO: add functional documentation (and inline comments, as necessary)
-
 #include "PatientPriorityQueuex.h"
-#include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -36,6 +32,9 @@ void removePatientCmd(PatientPriorityQueuex &);
 void showPatientListCmd(PatientPriorityQueuex &);
 // Displays the list of patients in the waiting room.
 
+void savePatientListCmd(string, PatientPriorityQueuex &);
+// Save patient to database
+
 void execCommandsFromFileCmd(string, PatientPriorityQueuex &);
 // Reads a text file with each command on a separate line and executes the
 // lines as if they were typed into the command prompt.
@@ -58,7 +57,6 @@ int main() {
 	// process commands
 	PatientPriorityQueuex priQueue;
 
-    execCommandsFromFileCmd("my-commands.txt", priQueue);
 	do {
 		cout << "\ntriage> ";
 		getline(cin, line);
@@ -72,7 +70,7 @@ bool processLine(string line, PatientPriorityQueuex &priQueue) {
 	// get command
 	string cmd = delimitBySpace(line);
 	if (cmd.length() == 0) {
-		cout << "Error: no command given.";
+		cout << "Error: no command given.\n";
 		return false;
 	}
 	
@@ -89,6 +87,8 @@ bool processLine(string line, PatientPriorityQueuex &priQueue) {
 		removePatientCmd(priQueue);
 	else if (cmd == "list")
 		showPatientListCmd(priQueue);
+    else if (cmd == "save")
+        savePatientListCmd(line, priQueue);
 	else if (cmd == "load")
 		execCommandsFromFileCmd(line, priQueue);
 	else if (cmd == "quit")
@@ -134,7 +134,7 @@ void changePatientCmd(string line, PatientPriorityQueuex &priQueue) {
 
     // get arrivalOrder number and priority
     arrival = delimitBySpace(line);
-    if (arrival.length() == 0) {
+    if (arrival.length() == 0 || line == "change") {
         cout << "Error: No patient id provided.\n";
         return;
     }
@@ -181,7 +181,7 @@ void removePatientCmd(PatientPriorityQueuex &priQueue) {
     if (priQueue.size() == 0)
         cout << "There are no patients in the waiting area." << endl;
     else
-        cout << "This patient will now be seen: " << priQueue.remove();
+        cout << "This patient will now be seen: " << priQueue.remove() << endl;
 }
 
 void showPatientListCmd(PatientPriorityQueuex &priQueue) {
@@ -191,7 +191,20 @@ void showPatientListCmd(PatientPriorityQueuex &priQueue) {
     cout << priQueue.to_string();
 }
 
+void savePatientListCmd(string line, PatientPriorityQueuex &priQueue) {
+    int count;
+    string fileName;
 
+    // get saved filename
+    fileName = delimitBySpace(line);
+    if (fileName.length() == 0 || line == "save") {
+        cout << "Error: No file name provided.\n";
+        return;
+    }
+
+    count = priQueue.save(fileName);
+    cout << "Saved " << count << " patients to file "<< fileName << endl;
+}
 
 void execCommandsFromFileCmd(string filename, PatientPriorityQueuex &priQueue) {
 	ifstream infile;
@@ -264,11 +277,12 @@ void help() {
 << "peek        Displays the patient that is next in line, but keeps in queue\n"
 << "list        Displays the list of all patients that are still waiting\n"
 << "            in the order that they have arrived.\n"
+<< "save        Save the list of all patients that are still waiting\n"
+<< "            in the order that they have arrived.\n"
 << "load <file> Reads the file and executes the command on each line\n"
 << "help        Displays this menu\n"
 << "quit        Exits the program\n";
 }
-
 
 string trim(const string& line){
     const char* WhiteSpace = " \t\v\r\n";

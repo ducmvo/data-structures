@@ -6,9 +6,12 @@
 #define P3_PATIENTPRIORITYQUEUEX_H
 #include "Patient.h"
 #include <sstream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <algorithm>
+
 using namespace std;
 
 class PatientPriorityQueuex {
@@ -24,6 +27,7 @@ public:
     string change(int, int);    // Change a patient priority
     string peek();              // Returns the highest priority patient without removing it.
     string remove();            // Removes the highest priority patient from the queue and returns it. This function needs to maintain heap order.
+    int save(string);           // Save patient list to file
     string to_string();         // Returns the string representation of the object in heap (or level) order.
                                 // Use a ss object to capture the string traversal.
 private:
@@ -108,8 +112,35 @@ string PatientPriorityQueuex::remove() {
     return remove(0);
 }
 
-// PRIVATE METHODS
+//bool comp (Patient i, Patient j) { return (i < j); }
 
+int PatientPriorityQueuex::save(string fileName) {
+    ofstream outFile;
+    string priority;
+
+    outFile.open (fileName);
+
+    int count = 0;
+    vector<Patient> sortedPatient = patients;
+    // This will replace the current arrival number with new one
+    // still keeping the patients' arrival order.
+    sort(sortedPatient.begin(), sortedPatient.end(),
+         [](Patient p1, Patient p2){ return p1 < p2; });
+
+    for (vector<Patient>::iterator patientIt = sortedPatient.begin() ;
+         patientIt != sortedPatient.end(); ++patientIt) {
+        priority = getPriorityStatus(patientIt->getPriorityCode());
+        outFile << "add " << priority << " " << patientIt->getName() << endl;
+        count++;
+    }
+
+    outFile.close();
+    return count;
+}
+
+
+
+// PRIVATE METHODS
 void PatientPriorityQueuex::add(string name, int priorityCode, int arrivalOrder)
 {
     // create new patient;
@@ -194,6 +225,5 @@ string PatientPriorityQueuex::getPriorityStatus(int priorityCode) {
         default: return "";
     }
 }
-
 
 #endif //P3_PATIENTPRIORITYQUEUEX_H
