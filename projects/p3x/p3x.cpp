@@ -2,6 +2,8 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <stdexcept>
+
 using namespace std;
 
 
@@ -141,7 +143,7 @@ void changePatientCmd(string line, PatientPriorityQueuex &priQueue) {
     // convert (string) arrival to number
     try {
         arrivalOrder = stoi(arrival);
-    } catch (invalid_argument) {
+    } catch (const invalid_argument &ia) {
         cout << "Error: invalid arrival order number input.\n";
         return;
     }
@@ -250,7 +252,7 @@ int getPriorityCode(string priority) {
     } else {
         return -1;
     }
-};
+}
 
 void welcome() {
     cout << "            WELCOME TO TRIAGE EMERGENCY ROOM              " << endl
