@@ -52,48 +52,51 @@ bool HashTable::empty() {
 }
 
 int HashTable::put(int key, int value) {
-    int index = hash(key);
+    if (tableSize == capacity) return -1; // if table is full;
 
-    while (table[index] != nullptr
-    && table[index]->key != key) {
-        index++;
-        index = hash(index);
-    }
+    int increment = 0, index;
+    do {
+        // hash/rehash key
+        index = hash(key + increment++);
+        // check table slot at hashed/rehashed key index
+        // table slot is empty
+        if (table[index] == nullptr) {
+            // create new bucket
+            Bucket *bucket = new Bucket;
+            bucket->key = key;
+            bucket->value = value;
+            table[index] = bucket;
+            tableSize++;
+            return index;
+        }
+    } while (table[index]->key != key); // collision -> rehashing
 
-    if (table[index] == nullptr) {
-        Bucket *bucket = new Bucket;
-        bucket->key = key;
-        bucket->value = value;
-        table[index] = bucket;
-        tableSize++;
-    } else if (table[index]->key == key) {
-        table[index]->value = value;
-    }
-
+    // bucket with same key found (table[index]->key == key)
+    table[index]->value = value;  // update value
     return index;
 }
 
 
 int HashTable::get(int key) {
-    int index = hash(key);
-    if (table[index] == nullptr)
-        return -1;
 
-    while (table[index] != nullptr && table[index]->key != key) {
-        index++;
-        index = hash(index);
-    }
-    return table[index]->value;
 }
 
 bool HashTable::contains(int key) {
-    int index = hash(key);
-    if (table[index] == nullptr) return false;
-    while (table[index]->key != key) {
-        index++;
-        index = hash(index);
-    }
+    if (key < 0) return -1; // invalid key input
+    int increment = 0, index;
+    do {
+        // hash/rehash key
+        index = hash(key + increment++);
+        // check table slot at hashed/rehashed key index
+        // table slot is empty
+        if (table[index] == nullptr) {
+           return false;
+        }
+    } while (table[index]->key != key); // collision -> rehashing
+
+    // bucket with same key found (table[index]->key == key)
     return true;
+
 }
 
 #endif //LAB6_HASHTABLE_H
