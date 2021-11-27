@@ -54,6 +54,7 @@ void testPut(int* testArr, int size, HashTable &table) {
     for (int i = 0; i < size; i++) {
         cout << "(" << testArr[i] << ", " << value << ")"
         << (table.contains(testArr[i]) ? " update" : " insert")
-        << " @["<< table.put(testArr[i] , value++) << "]" << endl;
+        << " @["<< table.put(testArr[i] , value) << "]" << endl;
+        value++;
     }
 }
