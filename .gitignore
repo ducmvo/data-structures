@@ -7,3 +7,4 @@ CMakeLists.txt
 *.gch
 *.pptx
 .DS_Store
+offline/
